@@ -58,14 +58,6 @@
 (require 'savehist)
 (add-to-list 'savehist-additional-variables 'el-docstring-sap--history)
 
-(defcustom el-docstring-sap--border-color nil "Color of border of `el-docstring-sap-mode' `posframe'." :type 'string)
-
-(defcustom el-docstring-sap--border-width nil "Width of background of `el-docstring-sap-mode' `posframe'." :type 'number)
-
-(defcustom el-docstring-sap--background-color nil "Color of background of `el-docstring-sap-mode' `posframe'." :type 'string)
-
-(defcustom el-docstring-sap--foreground-color nil "Color of foreground of `el-docstring-sap-mode' `posframe'." :type 'string)
-
 (defcustom el-docstring-sap--lighter " SapDoc" "Modeline indicator for `el-docstring-sap-mode'." :type 'string)
 
 (defcustom el-docstring-sap--display-funcs  '(el-docstring-sap--posframe el-docstring-sap--quick-peek el-docstring-sap--popup el-docstring-sap--describe-symbol)
@@ -78,8 +70,7 @@
 (defvar el-docstring-sap--timer nil  "Store the `el-docstring-sap-mode' timer." )
 (defvar el-docstring-sap--lastsym nil  "Don't idle-repeat the same symbol twice in a row.")
 
-;; (require 'use-package)
-(require 'posframe)
+(require 'use-package)
 
 (defun el-docstring-sap--describe-symbol(&optional _docstring sym)
 
@@ -177,9 +168,9 @@
             el-docstring-sap--delay t
             'el-docstring-sap--timer-func))))
 
-;; (use-package posframe
-;;   :commands (posframe-hide posframe-show el-docstring-sap--posframe)
-;;   :init
+(use-package posframe
+  :commands (posframe-hide posframe-show el-docstring-sap--posframe)
+  :init
   (defcustom el-docstring-sap--posframe-poshandler  nil "select the PosFrame :poshandler."
     :type '(choice
             (const :tag "Show docstring at point." nil)
@@ -218,18 +209,13 @@
               (get-buffer-create "*el-docstring*")
             (erase-buffer)
             (insert docstring)
-            (posframe-show (current-buffer)
-                           :string docstring
-                           :border-color (or el-docstring-sap--border-color
-                                             "yellow")
-                           :border-width (or el-docstring-sap--border-width 1)
-                           :background-color (or el-docstring-sap--background-color
-                                                 "#111125")
-                           :foreground-color (or el-docstring-sap--foreground-color
-                                                 "#FEE000")
-                           :poshandler el-docstring-sap--posframe-poshandler
-                           :position (if (bound-and-true-p el-docstring-sap--posframe-poshandler) t p)))))))
-;; )
+            (let ((elspahpl el-docstring-sap--posframe-arghandler-plist)) 
+            (plist-put elspahpl :string 'docstring)
+            (plist-put elspahpl :poshandler el-docstring-sap--posframe-poshandler)
+            (plist-put elspahpl :position (if (bound-and-true-p
+                                               el-docstring-sap--posframe-poshandler)
+                                              t p))
+            (apply #'posframe-show (current-buffer) elspahpl))))))))
 
 (defun el-docstring-sap--quick-peek(&optional docstring _sym)
   "`quick-peek-show' to display  DOCSTRING.  Pass nil to erase."
