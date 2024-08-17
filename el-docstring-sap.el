@@ -58,8 +58,6 @@
 (require 'savehist)
 (add-to-list 'savehist-additional-variables 'el-docstring-sap--history)
 
-(defcustom el-docstring-sap--lighter " SapDoc" "Modeline indicator for `el-docstring-sap-mode'." :type 'string)
-
 (defcustom el-docstring-sap--border-color nil "Color of border of `el-docstring-sap-mode' `posframe'." :type 'string)
 
 (defcustom el-docstring-sap--border-width nil "Width of background of `el-docstring-sap-mode' `posframe'." :type 'number)
@@ -67,6 +65,8 @@
 (defcustom el-docstring-sap--background-color nil "Color of background of `el-docstring-sap-mode' `posframe'." :type 'string)
 
 (defcustom el-docstring-sap--foreground-color nil "Color of foreground of `el-docstring-sap-mode' `posframe'." :type 'string)
+
+(defcustom el-docstring-sap--lighter " SapDoc" "Modeline indicator for `el-docstring-sap-mode'." :type 'string)
 
 (defcustom el-docstring-sap--display-funcs  '(el-docstring-sap--posframe el-docstring-sap--quick-peek el-docstring-sap--popup el-docstring-sap--describe-symbol)
   "Functions to provide `el-docstring-sap-mode' display." :type '(repeat function))
