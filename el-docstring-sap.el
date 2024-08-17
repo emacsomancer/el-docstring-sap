@@ -60,6 +60,14 @@
 
 (defcustom el-docstring-sap--lighter " SapDoc" "Modeline indicator for `el-docstring-sap-mode'." :type 'string)
 
+(defcustom el-docstring-sap--border-color " SapDoc" "Color of border of `el-docstring-sap-mode' `posframe'." :type 'string)
+
+(defcustom el-docstring-sap--border-width " SapDoc" "Width of background of `el-docstring-sap-mode' `posframe'." :type 'number)
+
+(defcustom el-docstring-sap--background-color " SapDoc" "Color of background of `el-docstring-sap-mode' `posframe'." :type 'string)
+
+(defcustom el-docstring-sap--foreground-color " SapDoc" "Color of foreground of `el-docstring-sap-mode' `posframe'." :type 'string)
+
 (defcustom el-docstring-sap--display-funcs  '(el-docstring-sap--posframe el-docstring-sap--quick-peek el-docstring-sap--popup el-docstring-sap--describe-symbol)
   "Functions to provide `el-docstring-sap-mode' display." :type '(repeat function))
 
@@ -190,7 +198,7 @@
                    (function-item posframe-poshandler-window-bottom-right-corner)
                    (function-item posframe-poshandler-window-center))))
 
-  (defcustom el-docstring-sap--posframe-arghandler-plist  '(:width 80 :internal-border-width 2 :background-color "#303030" :border-width 2 :border-color "orange") "Posfame's fallback config plist." :type 'plist )
+  (defcustom el-docstring-sap--posframe-arghandler-plist  '(:width 80 :internal-border-width 2 :background-color "#303030" :border-width 2 :border-color "orange") "Posfame's fallback config plist." :type 'plist)
 
   (defun el-docstring-sap--posframe-arghandler (_buffer-or-name arg-name value)
     "Function to override posframe VALUE for ARG-NAME with customs from the plist `el-docstring-sap--posframe-arghandler-plist'"
@@ -211,6 +219,13 @@
             (insert docstring)
             (posframe-show (current-buffer)
                            :string docstring
+                           :border-color (or el-docstring-sap--border-color
+                                             "yellow")
+                           :border-width (or el-docstring-sap--border-width 1)
+                           :background-color (or el-docstring-sap--background-color
+                                                 "#111125")
+                           :foreground-color (or el-docstring-sap--foreground-color
+                                                 "#FEE000")
                            :poshandler el-docstring-sap--posframe-poshandler
                            :position (if (bound-and-true-p el-docstring-sap--posframe-poshandler) t p))))))))
 
