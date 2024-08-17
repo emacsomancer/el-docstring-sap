@@ -70,7 +70,8 @@
 (defvar el-docstring-sap--timer nil  "Store the `el-docstring-sap-mode' timer." )
 (defvar el-docstring-sap--lastsym nil  "Don't idle-repeat the same symbol twice in a row.")
 
-(require 'use-package)
+;; (require 'use-package)
+(require 'posframe)
 
 (defun el-docstring-sap--describe-symbol(&optional _docstring sym)
 
@@ -219,11 +220,12 @@
 (defun el-docstring-sap--quick-peek(&optional docstring _sym)
   "`quick-peek-show' to display  DOCSTRING.  Pass nil to erase."
   (interactive)
+  (require 'quick-peek)
   (condition-case nil
       (progn
         (quick-peek-hide)
-        (when (not (featurep 'quick-peek))
-          (use-package quick-peek :commands (quick-peek-hide quick-peek-show)))
+        ;; (when (not (featurep 'quick-peek))
+        ;;   (use-package quick-peek :commands (quick-peek-hide quick-peek-show)))
         (when docstring
           (quick-peek-show docstring)))
     (error (el-docstring-sap--display-fail docstring))))
@@ -231,10 +233,11 @@
 (defun el-docstring-sap--popup(&optional docstring _sym)
   "`popup-tip' to display  DOCSTRING.  Pass nil to erase."
   (interactive)
+  (require 'popup)
   (condition-case nil
       (progn
-        (when (not (featurep 'popup))
-          (use-package popup :commands (popup-tip)))
+        ;; (when (not (featurep 'popup))
+        ;;   (use-package popup :commands (popup-tip)))
         (when docstring
           (popup-tip docstring)))
     (error (el-docstring-sap--display-fail docstring))))
